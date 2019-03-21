@@ -1,0 +1,44 @@
+﻿
+
+<section class="main-content-wrapper section_padding_100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-9">
+                <!-- Gazette Welcome Post -->
+                <div class="gazette-welcome-post">
+                    <!-- Post Tag -->
+
+                    @foreach (var item in Model)
+                    {
+                        <div class="gazette-post-tag">
+                            <a href="~/Home/Details/@item.Id">@item.Category.CategoryName</a>
+                        </div>
+                        <h2 class="font-pt">@item.Title</h2>
+                        <p class="gazette-post-date">@item.NewsDate.Day -@item.NewsDate.Month - @item.NewsDate.Year</p>
+                        <!-- Post Thumbnail -->
+                        <div class="blog-post-thumbnail my-5">
+                            <img src="@item.Photo" alt="post-thumb">
+                        </div>
+                        <!-- Post Excerpt -->
+                        <p>@item.Description</p>
+                        <!-- Reading More -->
+                        <div class="post-continue-reading-share d-sm-flex align-items-center justify-content-between mt-30">
+                            <div class="post-continue-btn" style="margin-bottom:50px">
+                                <a href="~/Home/Details/@item.Id" class="font-pt">Continue Reading <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                            </div>
+                            <div class="post-share-btn-group">
+                                <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                                <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+
+                    }
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

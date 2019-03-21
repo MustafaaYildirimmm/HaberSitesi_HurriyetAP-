@@ -18,8 +18,6 @@ namespace HaberSitesiBitirmeProjesi.Entity
         public DbSet<Category> Categories { get; set; }
         public DbSet<Member> Member { get; set; }
         public DbSet<Articles> Articles { get; set; }
-        public DbSet<Files> Files { get; set; }
-        public DbSet<Metadata> Metadata { get; set; }
 
         public System.Data.Entity.DbSet<HaberSitesiBitirmeProjesi.Entity.Role> Roles { get; set; }
     }

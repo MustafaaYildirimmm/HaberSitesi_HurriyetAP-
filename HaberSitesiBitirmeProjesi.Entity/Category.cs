@@ -9,8 +9,14 @@ namespace HaberSitesiBitirmeProjesi.Entity
 {
     public class Category
     {
+        public Category()
+        {
+            this.Articles = new HashSet<Articles>();
+        }
         [Key]
         public int ID { get; set; }
         public string CategoryName { get; set; }
+
+        public ICollection<Articles> Articles { get; set; }
     }
 }

@@ -1,0 +1,59 @@
+﻿@using HaberSitesiBitirmeProjesi.Entity
+@model Articles
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_UILAyout.cshtml";
+}
+
+<script src="~/Content/ckeditor/ckeditor.js"></script>
+
+<section class="main-content-wrapper section_padding_100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-9">
+                <!-- Gazette Welcome Post -->
+                <div class="gazette-welcome-post">
+                    <!-- Post Tag -->
+                    <div class="gazette-post-tag">
+                        <a href="~/News/Details/@Model.Id">@Model.Category.CategoryName</a>
+                    </div>
+                    <h2 class="font-pt">@Model.Title</h2>
+                    <p class="gazette-post-date">@Model.NewsDate.Day -@Model.NewsDate.Month - @Model.NewsDate.Year</p>
+                    <!-- Post Thumbnail -->
+                    <div class="blog-post-thumbnail my-5">
+                        <img src="@Model.Photo" alt="post-thumb">
+                    </div>
+                    <!-- Post Excerpt -->
+                    <p>@Model.Description</p>
+
+                    <!-- haberlerin text leri html tagleri ile birlikte  string halde gelip kaydedildigi icin db den fron-side e entegre edebilmek icin ckeditor kullanarak html taglerine dönüstürdüm. daha sonra textarea nın val ını alarak bos bir div in icerisine aktardım.-->
+                    @Html.TextAreaFor(m => m.Text, new { @id = "ckeditor", @class = "ckeditor" })
+                    <p class="article_text">
+
+                    </p>
+                    <!-- Reading More -->
+                    <div class="post-continue-reading-share d-sm-flex align-items-center justify-content-between mt-30">
+                        <div class="post-share-btn-group">
+                            <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var text = $('#ckeditor').val();
+        $('.article_text').append(
+            text
+        )
+        $("#ckeditor").remove();
+    });
+
+</script>

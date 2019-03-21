@@ -1,5 +1,6 @@
 ﻿using HaberSitesiBitirmeProjesi.Bussiness;
 using HaberSitesiBitirmeProjesi.Entity;
+using HaberSitesiBitirmeProjesi.Entity.API;
 using System;
 using System.Collections.Generic;
 using System.Linq;

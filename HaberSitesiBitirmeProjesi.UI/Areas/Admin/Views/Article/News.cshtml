@@ -6,13 +6,14 @@
 }
 
 <h2 class="text-center">Front- Side News</h2>
-<table class="table table-responsive table-hover ">
+<table class="table table-hover ">
     <thead>
         <tr>
             <th>Article Id</th>
             <th>Date</th>
             <th>Title</th>
             <th>Category</th>
+            <th>Photo</th>
             <th>Details|Delete</th>
         </tr>
     </thead>
@@ -20,10 +21,11 @@
         @foreach (var item in Model)
         {
             <tr>
-                <th>@item.ArtID</th>
-                <th>@item.CreatedDate</th>
-                <th>@item.Title</th>
-                <th>@item.Path</th>
+                <th>@item.ArticleId</th>
+                <th>@item.NewsDate</th>
+                <th class="col-md-4">@item.Title</th>
+                <th>@item.Category.CategoryName</th>
+                <th><img src="@item.Photo" alt="Alternate Text" width="100" height="100" /></th>
                 <th>
                     <a href="~/Admin/Article/Details/@item.Id" class="btn btn-primary"><i class="glyphicon-edit"></i></a>
                     <a href="~/Article/Delete/@item.Id" class="btn btn-danger"><i class="glyphicon glyphicon-expand"></i></a>

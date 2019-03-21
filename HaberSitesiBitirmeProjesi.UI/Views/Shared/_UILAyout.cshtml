@@ -1,5 +1,4 @@
 ﻿@using HaberSitesiBitirmeProjesi.DataAccess
-@model CategoryRep
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <!-- Title  -->
-    <title>TheGazette - News Magazine HTML5 Template | Home</title>
+    <title>TheGazette - News Magazine </title>
 
     <!-- Favicon  -->
     <link rel="icon" href="~/thegazette/img/core-img/favicon.ico">
@@ -21,6 +20,7 @@
 
     <!-- Responsive CSS -->
     <link href="~/thegazette/css/responsive.css" rel="stylesheet">
+    <script src="~/Scripts/jquery-1.9.1.min.js"></script>
 
 </head>
 
@@ -152,7 +152,7 @@
                     <!-- Logo Area -->
                     <div class="col-12 col-md-4">
                         <div class="logo-area">
-                            <a href="index.html"><img src="~/thegazette/img/core-img/logo.png" alt="logo"></a>
+                            <a href="~/Home/Index"><img src="~/thegazette/img/core-img/logo.png" alt="logo"></a>
                         </div>
                     </div>
                     <!-- Header Advert Area -->
@@ -174,18 +174,29 @@
                                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#gazetteMenu" aria-controls="gazetteMenu" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i> Menu</button>
                                 <div class="collapse navbar-collapse" id="gazetteMenu">
                                     <ul class="navbar-nav mr-auto">
-                                        @{ 
-                                            
-                                            CategoryRep cr=new CategoryRep
+                                        @{
+
+                                            CategoryRep cr = new CategoryRep();
+                                            int i = 0;
+                                            foreach (var item in cr.List().ProccessResult)
+                                            {
+                                                if (i == 0)
+                                                {
+                                                    <li class="nav-item active">
+                                                        <a class="nav-link" href="~/Home/@item.CategoryName.Replace("ü","u")/@item.ID">@item.CategoryName <span class="sr-only">(current)</span></a>
+                                                    </li>
+                                                }
+                                                else
+                                                {
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="~/Home/@item.CategoryName.Replace("ü","u")/@item.ID">@item.CategoryName</a>
+                                                    </li>
+                                                }
+
+                                                i++;
+                                            }
+
                                         }
-                                        <li class="nav-item active">
-                                            <a class="nav-link" href="#">Today <span class="sr-only">(current)</span></a>
-                                        </li>
-                                        
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#">Politics</a>
-                                        </li>
-                                        
                                     </ul>
                                     <!-- Search Form -->
                                     <div class="header-search-form mr-auto">
@@ -208,15 +219,12 @@
     </header>
     <!-- Header Area End -->
     <!-- Welcome Blog Slide Area Start -->
-    
     <!-- Welcome Blog Slide Area End -->
     <!-- Latest News Marquee Area Start -->
     @RenderBody()
     <!-- Latest News Marquee Area End -->
     <!-- Main Content Area Start -->
-    
     <!-- Catagory Posts Area End -->
-
     <!-- Footer Area Start -->
     <footer class="footer-area bg-img background-overlay" style="background-image: url(~/thegazette/img/bg-img/4.jpg);">
         <!-- Top Footer Area -->

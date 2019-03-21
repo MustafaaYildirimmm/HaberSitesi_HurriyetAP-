@@ -37,8 +37,11 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="HurriyetNet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HurriyetNet.1.0.0\lib\HurriyetNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\HurriyetNet.1.0.0\lib\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -54,11 +57,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\ApiMethod.cs" />
+    <Compile Include="API\ArticleApi.cs" />
+    <Compile Include="API\FilesApi.cs" />
     <Compile Include="Articles.cs" />
     <Compile Include="Category.cs" />
-    <Compile Include="Files.cs" />
     <Compile Include="Member.cs" />
-    <Compile Include="Metadata.cs" />
     <Compile Include="Migrations\201903201455061_mistik.cs" />
     <Compile Include="Migrations\201903201455061_mistik.Designer.cs">
       <DependentUpon>201903201455061_mistik.cs</DependentUpon>

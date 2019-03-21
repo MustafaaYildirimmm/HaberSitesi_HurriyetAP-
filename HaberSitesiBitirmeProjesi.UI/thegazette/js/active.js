@@ -87,7 +87,7 @@
     // Marquee Active Code
     if ($.fn.SimpleMarquee) {
         $('.simple-marquee-container').SimpleMarquee({
-            duration: 60000,
+            duration: 700000,
             padding: 0,
             marquee_class: '.marquee',
             container_class: '.simple-marquee-container',

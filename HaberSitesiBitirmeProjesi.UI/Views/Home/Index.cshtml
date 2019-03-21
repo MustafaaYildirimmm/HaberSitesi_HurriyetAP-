@@ -1,8 +1,182 @@
-﻿
+﻿@using HaberSitesiBitirmeProjesi.DataAccess
+@model ArticleRep
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_UILAyout.cshtml";
 }
 
-<h2>Index</h2>
+<!-- Welcome Blog Slide Area Start -->
+<section class="welcome-blog-post-slide owl-carousel">
+    <!-- Single Blog Post -->
+    @{
 
+        ArticleRep ar = new ArticleRep();
+        CategoryRep cr = new CategoryRep();
+
+        foreach (var item in ar.List().ProccessResult)
+        {
+            <div class="single-blog-post-slide bg-img background-overlay-5" style="background-image: url(@item.Photo);">
+                <!-- Single Blog Post Content -->
+                <div class="single-blog-post-content">
+                    <div class="tags">
+                        <a href="~/Home/Details/@item.Id">@item.Category.CategoryName</a>
+                    </div>
+                    <h3><a href="~/Home/Details/@item.Id" class="font-pt">@item.Title</a></h3>
+                    <div class="date">
+                        <a href="~/Home/Details/@item.Id">@item.NewsDate.Month @item.NewsDate.Day , @item.NewsDate.Year</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+    }
+
+
+</section>
+<!-- Welcome Blog Slide Area End -->
+<!-- Latest News Marquee Area Start -->
+<div class="latest-news-marquee-area">
+    @{
+        <div class="simple-marquee-container">
+            <div class="marquee">
+                <ul class="marquee-content-items">
+
+                    @foreach (var item in ar.List().ProccessResult)
+                    {
+                        <li>
+                            <a href="~/Home/Details/@item.Id"><span class="latest-news-time">@item.NewsDate.Hour:@item.NewsDate.Minute</span> @item.Title</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+
+</div>
+<!-- Latest News Marquee Area End -->
+<section class="main-content-wrapper section_padding_100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-9">
+                <!-- Gazette Welcome Post -->
+                <div class="gazette-welcome-post">
+                    <!-- Post Tag -->
+                    @{
+                        foreach (var item in ar.GetByIdLatestNews(10).ProccessResult)
+                        {
+                            if (item.Category.CategoryName == "Dünya")
+                            {
+                                <div class="gazette-post-tag">
+                                    <a href="~/Home/Details/@item.Id">@item.Category.CategoryName</a>
+                                </div>
+                                <h2 class="font-pt">@item.Title</h2>
+                                <p class="gazette-post-date">@item.NewsDate.Day -@item.NewsDate.Month - @item.NewsDate.Year</p>
+                                <!-- Post Thumbnail -->
+                                <div class="blog-post-thumbnail my-5">
+                                    <img src="@item.Photo" alt="post-thumb">
+                                </div>
+                                <!-- Post Excerpt -->
+                                <p>@item.Description</p>
+                                <!-- Reading More -->
+                                <div class="post-continue-reading-share d-sm-flex align-items-center justify-content-between mt-30">
+                                    <div class="post-continue-btn">
+                                        <a href="~/Home/Details/@item.Id" class="font-pt">Continue Reading <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                                    </div>
+                                    <div class="post-share-btn-group">
+                                        <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                                        <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                                        <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                                        <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+
+                </div>
+
+                <!-- Single Today Post -->
+                @{
+
+                    int i = 0;
+                    <div class="gazette-todays-post section_padding_100_50">
+                        <div class="gazette-heading">
+                            <h4>Populer Haberler</h4>
+                        </div>
+                        <!-- Single Today Post -->
+                        @foreach (var item in ar.List().ProccessResult)
+                                    {
+                                        
+                                        if ((item.Category.CategoryName == "Gündem"&&i<2)||(item.Category.CategoryName=="Ekonomi"&&i<2))
+                                        {
+                                <div class="gazette-single-todays-post d-md-flex align-items-start mb-50">
+                                    <div class="todays-post-thumb">
+                                        <img src="@item.Photo" alt="">
+                                    </div>
+                                    <div class="todays-post-content">
+                                        <!-- Post Tag -->
+                                        <div class="gazette-post-tag">
+                                            <a href="~/Home/Details/@item.Id">@item.Category.CategoryName</a>
+                                        </div>
+                                        <h3><a href="~/Home/Details/@item.Id" class="font-pt mb-2">@item.Title</a></h3>
+                                        <span class="gazette-post-date mb-2">@item.NewsDate.Day - @item.NewsDate.Month - @item.NewsDate.Year</span>
+                                        <a href="~/Home/Details/@item.Id" class="post-total-comments">3 Comments</a>
+                                        <p>@item.Description</p>
+                                    </div>
+                                </div>
+                                i++;
+                            }
+
+                        }
+                    </div>
+
+                }
+
+
+
+            </div>
+
+            <div class="col-12 col-lg-3 col-md-6">
+                <div class="sidebar-area">
+                    <!-- Breaking News Widget -->
+                    <div class="breaking-news-widget">
+                        <div class="widget-title">
+                            <h5>breaking news</h5>
+                        </div>
+                        @{
+                            foreach (var item in ar.GetByIdLatestNews(3).ProccessResult)
+                            {
+                                <!-- Single Breaking News Widget -->
+                                <div class="single-breaking-news-widget">
+                                    <img src="@item.Photo" alt="">
+                                    <div class="breakingnews-title">
+                                        <p>Son Dakika</p>
+                                    </div>
+                                    <div class="breaking-news-heading gradient-background-overlay">
+                                        <h5 class="font-pt">@item.Description.Substring(0,30) . . .</h5>
+                                    </div>
+                                </div>
+                            }
+                        }
+
+
+                    </div>               
+                 
+                    <!-- Subscribe Widget -->
+                    <div class="subscribe-widget">
+                        <div class="widget-title">
+                            <h5>subscribe</h5>
+                        </div>
+                        <div class="subscribe-form">
+                            <form action="#">
+                                <input type="email" name="email" id="subs_email" placeholder="Your Email">
+                                <button type="submit">subscribe</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+</section>

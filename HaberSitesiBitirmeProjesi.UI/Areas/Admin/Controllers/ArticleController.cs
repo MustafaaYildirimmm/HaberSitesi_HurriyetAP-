@@ -21,7 +21,7 @@ namespace HaberSitesiBitirmeProjesi.UI.Areas.Admin.Controllers
 
         public ActionResult AddArt(int id)
         {
-            result = ar.Insert(ar.GetT(id).ProccessResult);
+            result = ar.Insert(ar.GetByIdApi(id).ProccessResult);
             if (result.IsSucceed)
             {
                 return RedirectToAction("News", "Admin/Article");
@@ -43,7 +43,7 @@ namespace HaberSitesiBitirmeProjesi.UI.Areas.Admin.Controllers
             }
             else
             {
-                return View(ar.GetByDb(id).ProccessResult);
+                return View(ar.GetByIdApi(id).ProccessResult);
             }
             
         }

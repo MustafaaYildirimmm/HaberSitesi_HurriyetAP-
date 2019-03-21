@@ -1,5 +1,6 @@
 ﻿using HaberSitesiBitirmeProjesi.Bussiness;
 using HaberSitesiBitirmeProjesi.Entity;
+using HaberSitesiBitirmeProjesi.Entity.API;
 using HurriyetNet;
 using Newtonsoft.Json;
 using System;
@@ -12,15 +13,19 @@ namespace HaberSitesiBitirmeProjesi.DataAccess
 {
     public class ArticleRep : DataRepository<Articles>
     {
-        ResultProccess<Articles> result = new ResultProccess<Articles>();
+
         private static NewsPaperContext db = Tools.GetConnection();
+
+        ResultProccess<ArticleApi> resultApi = new ResultProccess<ArticleApi>();
+        ResultProccess<Articles> result = new ResultProccess<Articles>();
+        
         List<string> art = new List<string>();
-        List<Articles> artDes = new List<Articles>();
+        List<ArticleApi> artDes = new List<ArticleApi>();
+        ApiMethod HurriyetApi = new ApiMethod();
 
         public override Result<int> Delete(int id)
         {
-            db.Files.RemoveRange(db.Files.Where(t => t.Article.Id == id).ToList());
-            db.Articles.Remove(db.Articles.SingleOrDefault(t=>t.Id==id));
+            db.Articles.Remove(db.Articles.SingleOrDefault(t => t.Id == id));
             return result.GetResult(db);
         }
 
@@ -32,7 +37,7 @@ namespace HaberSitesiBitirmeProjesi.DataAccess
 
         public override Result<List<Articles>> List()
         {
-            return result.GetListResult(db.Articles.ToList());            
+            return result.GetListResult(db.Articles.ToList());
         }
 
         public override Result<int> Update(Articles item)
@@ -42,41 +47,41 @@ namespace HaberSitesiBitirmeProjesi.DataAccess
 
         public override Result<Articles> GetT(int id)
         {
-            Api(art, artDes);
-            foreach (var item in artDes)
-            {
-                if (item.ArtID == id)
-                {
-                    return result.GetObjByID(item);
-                }
-            }
-            return result.GetObjByID(null);
+            return result.GetObjByID(db.Articles.SingleOrDefault(t => t.Id == id));
         }
 
-        public Result<List<Articles>> ListApi()
+        public Result<List<ArticleApi>> ListApi()
         {
-            Api(art, artDes);
-            return result.GetListResult(artDes);
+            HurriyetApi.Api(art, artDes);
+            return resultApi.GetListResult(artDes);
         }
 
-        public void Api(List<string> artt,List<Articles> artDess)
+        public Result<Articles> GetByIdApi(int id)
         {
-            HurriyetConf.ApiKey = "d500daf3de1d4d499521850f317d19e8";
-            foreach (var item in Hurriyet.AllArticles)
+            ArticleApi item=HurriyetApi.SingleApi(id);
+            CategoryRep cr = new CategoryRep();
+            Articles a = new Articles();          
+            a.Title = item.Title;
+            a.Description = item.Description;
+            a.NewsDate = item.ModifiedDate;
+            a.ArticleId = item.Id;
+            a.Text = item.Text;
+            foreach (var photo in item.Files)
             {
-                artt.Add(item.ToString());
+                a.Photo = photo.FileUrl;
+                break;
             }
-            foreach (var item in art)
+            foreach (var cat in cr.List().ProccessResult)
             {
-                artDess.Add(JsonConvert.DeserializeObject<Articles>(item));
+                if (item.Path.ToLower().Contains(cat.CategoryName.Replace("ü", "u").ToLower()))
+                    a.CategoryId = cat.ID;
             }
+            return result.GetObjByID(a);
         }
 
-        public Result<Articles> GetByDb(int id)
+        public Result<List<Articles>> GetByIdLatestNews(int Quantity)
         {
-            Files a = db.Files.FirstOrDefault(t=>t.Article.Id==id);
-            return result.GetObjByID(a.Article);
+            return result.GetListResult(db.Articles.OrderByDescending(t => t.Id).Take(Quantity).ToList());
         }
-                              
     }
 }

@@ -1,23 +1,16 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HaberSitesiBitirmeProjesi.Entity
+namespace HaberSitesiBitirmeProjesi.Entity.API
 {
     [JsonObject(MemberSerialization = MemberSerialization.OptIn)]
-    public class Files
+    public class FilesApi
     {
-        [Key]
-        public int Id { get; set; }
         [JsonProperty(PropertyName = "FileUrl")]
         public string FileUrl { get; set; }
-        [JsonProperty(PropertyName = "Metadata")]
-        public Metadata Metadata { get; set; }
-
-        public virtual Articles Article { get; set; }
     }
 }

@@ -1,5 +1,5 @@
-﻿@using HaberSitesiBitirmeProjesi.Entity
-@model IEnumerable<Articles>
+﻿@using HaberSitesiBitirmeProjesi.Entity.API
+@model IEnumerable<ArticleApi>
 @{
     ViewBag.Title = "List";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -23,13 +23,13 @@
         {
 
             <tr>
-                <td>@item.ArtID</td>
+                <td>@item.Id</td>
                 <td>@item.StartDate</td>
                 <td>@item.Title</td>
                 <td>@item.Path</td>
                 <td>
-                    <a href="~/Admin/Article/Details/@item.ArtID" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
-                    <a href="~/Article/AddArt/@item.ArtID" class="btn btn-danger"><i class="glyphicon glyphicon-plus"></i></a>
+                    <a href="~/Admin/Article/Details/@item.Id" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
+                    <a href="~/Article/AddArt/@item.Id" class="btn btn-danger"><i class="glyphicon glyphicon-plus"></i></a>
                     
                 </td>
             </tr>
