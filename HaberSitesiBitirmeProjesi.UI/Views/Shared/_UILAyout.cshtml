@@ -21,6 +21,7 @@
     <!-- Responsive CSS -->
     <link href="~/thegazette/css/responsive.css" rel="stylesheet">
     <script src="~/Scripts/jquery-1.9.1.min.js"></script>
+    <script src="~/thegazette/js/active.js"></script>
 
 </head>
 
@@ -157,9 +158,31 @@
                     </div>
                     <!-- Header Advert Area -->
                     <div class="col-12 col-md-8">
-                        <div class="header-advert-area">
-                            <a href="#"><img src="~/thegazette/img/bg-img/top-advert.png" alt="header-add"></a>
-                        </div>
+                        @{
+                            if (User.Identity.IsAuthenticated)
+                            {
+                                <div class="post-continue-btn pull-right">
+                                    <a href="##" class="font-pt">LogOut </a>
+                                </div>
+
+                                <div class="post-continue-btn pull-right" style="margin-right:10px">
+                                    <p>asdsadads</p>
+                                    @DateTime.Now
+                                </div>
+                            }
+                            else
+                            {
+
+                                <div class="post-continue-btn pull-right">
+                                    <a href="~/Account/LogIn" class="font-pt">LogIn </a>
+                                </div>
+                                <div class="post-continue-btn pull-right" style="margin-right:10px">
+                                    <a href="##" class="font-pt">Register </a>
+                                </div>
+
+                            }
+                        }
+
                     </div>
                 </div>
             </div>

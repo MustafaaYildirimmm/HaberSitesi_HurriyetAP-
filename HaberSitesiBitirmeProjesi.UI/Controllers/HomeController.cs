@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using HaberSitesiBitirmeProjesi.Entity;
 using HaberSitesiBitirmeProjesi.Bussiness;
 using HaberSitesiBitirmeProjesi.DataAccess;
+using System.Diagnostics;
 
 namespace HaberSitesiBitirmeProjesi.UI.Controllers
 {
@@ -18,6 +19,8 @@ namespace HaberSitesiBitirmeProjesi.UI.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            //string path = @"C:\Users\msft_\source\repos\HaberSitesi_HurriyetAPı\HaberSitesiBitirmeSitesi.Exe\obj\Debug\HaberSitesiBitirmeSitesi.Exe.exe";
+            //Process.Start(path);
             return View();
         }
 

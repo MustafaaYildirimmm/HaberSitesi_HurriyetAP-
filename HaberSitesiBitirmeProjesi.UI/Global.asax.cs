@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HaberSitesiBitirmeProjesi.UI.Models.Shedular;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,6 +14,8 @@ namespace HaberSitesiBitirmeProjesi.UI
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            //CampaignPushJobShedular.Start();
         }
     }
 }
