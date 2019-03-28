@@ -29,6 +29,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
 </head>
 
@@ -184,6 +185,18 @@
                             <li>
                                 <a href="~/Admin/Category/Create">Add Category</a>
                             </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#comment"><i class=" glyphicon glyphicon-th-list "></i> Comment <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="comment" class="collapse">
+                            <li>
+                                <a href="~/Admin/Comment/List">List Comment</a>
+                            </li>
+                            <li>
+                                <a href="~/Admin/Comment/ConfComment">Confirmed Comment</a>
+                            </li>
+
                         </ul>
                     </li>
                 </ul>

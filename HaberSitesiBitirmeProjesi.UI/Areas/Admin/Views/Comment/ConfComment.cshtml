@@ -1,51 +1,47 @@
 ﻿@using PagedList
 @using PagedList.Mvc
 @using HaberSitesiBitirmeProjesi.Entity
-@model IPagedList<Articles>
+@model IPagedList<Comment>
 @{
-    ViewBag.Title = "News";
+    ViewBag.Title = "List";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
+<h2 class="text-center">List Comment</h2>
 
-
-<h2 class="text-center">Front- Side News</h2>
-<table class="table table-hover ">
+<table class="table table-hover">
     <thead>
         <tr>
-            <th>Article Id</th>
-            <th>Date</th>
-            <th>Title</th>
-            <th>Category</th>
-            <th>Photo</th>
-            <th>Details|Delete</th>
+            <th>Ad Soyad:</th>
+            <th>Email Address:</th>
+            <th>Comment:</th>
+            <th>Article Title:</th>
+            <th>Article Photo:</th>
+            <th>Delete</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.ArticleId </td>
-                <td>@item.NewsDate</td>
-                <td class="col-md-4">@item.Title</td>
-                <td>@item.Category.CategoryName</td>
-                <td><img src="@item.Photo" alt="Alternate Text" width="100" height="100" /></td>
+                <td>@item.Member.Name.ToUpper()  @item.Member.Surname.ToUpper()</td>
+                <td typeof="email">@item.Member.Email</td>
+                <td>@item.Message</td>
+                <td>@item.Article.Title</td>
+                <td><img src="@item.Article.Photo" width="75" height="75" alt="Alternate Text" /></td>
                 <td>
-                    <a href="~/Admin/Article/Details/" class="btn btn-primary"><i class="glyphicon-edit"></i></a>
                     <a href="##" id="@item.Id" class="btn btn-danger"><i class="glyphicon glyphicon-expand"></i></a>
                 </td>
             </tr>
         }
 
-
     </tbody>
 </table>
-@Html.PagedListPager(Model, _sayfaNo => Url.Action("News", "Article", new { SayfaNo = _sayfaNo }))
-<link href="~/Content/Style.css" rel="stylesheet" />
 
+@Html.PagedListPager(Model, _sayfaNo => Url.Action("List", "Comment", new { SayfaNo = _sayfaNo }))
 
 <script type="text/javascript">
-
+    //delete butonuna tıklanıldıgında ajax ile silme işlemi yapıldı.
     $("td .btn-danger").click(function () {
         var _this = this;
         const swalWithBootstrapButtons = Swal.mixin({
@@ -68,7 +64,7 @@
             if (result.value) {
 
                 $.ajax({
-                    url: '/Article/Delete?Id=' + _this.id,
+                    url: '/Comment/Delete?Id=' + _this.id,
                     method: 'POST',
                     dataType: 'Json',
                     success: function (data) {
@@ -99,6 +95,5 @@
             }
         });
     });
-
 
 </script>

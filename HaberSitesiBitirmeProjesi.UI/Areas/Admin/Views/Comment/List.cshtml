@@ -1,0 +1,151 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@using HaberSitesiBitirmeProjesi.Entity
+@model IPagedList<Comment>
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">List Comment</h2>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Ad Soyad:</th>
+            <th>Email Address:</th>
+            <th>Comment:</th>
+            <th>Article Title:</th>
+            <th>Article Photo:</th>
+            <th>Confirm | Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Member.Name.ToUpper()  @item.Member.Surname.ToUpper()</td>
+                <td typeof="email">@item.Member.Email</td>
+                <td>@item.Message</td>
+                <td>@item.Article.Title</td>
+                <td><img src="@item.Article.Photo" width="75" height="75" alt="Alternate Text" /></td>
+                <td>
+                    <a href="#" id="@item.Id" class="btn btn-success"><i class="glyphicon glyphicon-edit"></i></a>
+                    <a href="##" id="@item.Id" class="btn btn-danger"><i class="glyphicon glyphicon-expand"></i></a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+@Html.PagedListPager(Model, _sayfaNo => Url.Action("List", "Comment", new { SayfaNo = _sayfaNo }))
+
+<script type="text/javascript">
+    //delete butonuna tıklanıldıgında ajax ile silme işlemi yapıldı.
+    $("td .btn-danger").click(function () {
+        var _this = this;
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false,
+        });
+
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+
+                $.ajax({
+                    url: '/Comment/Delete?Id=' + _this.id,
+                    method: 'POST',
+                    dataType: 'Json',
+                    success: function (data) {
+                        if (data == "Başarili") {
+                            swalWithBootstrapButtons.fire(
+                                'Silindi',
+                                'Haberiniz Silindi',
+                                'success'
+                            ).then((button) => {
+                                if (button.value)
+                                    location.reload();
+                            })
+                        }
+
+                    }
+
+                })
+
+            } else if (
+                // Read more about handling dismissals
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'Your imaginary file is safe :)',
+                    'error'
+                )
+            }
+        });
+    });
+
+    $("td .btn-success").click(function () {
+        var _this = this;
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton:'btn btn-danger'
+            },
+            buttonStyling: false,
+        });
+
+        swalWithBootstrapButtons.fire({
+            title: 'Emin misiniz?',
+            text: "Onaylamak isteginize eminmisiniz",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Evet',
+            cancelButtonText: 'Hayır',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: '/Comment/Confirm?Id=' + _this.id,
+                    method: 'POST',
+                    dataType: 'Json',
+                    success: function (data) {
+                        if (data == "Başarili") {
+                            swalWithBootstrapButtons.fire(
+                                'Onaylandı',
+                                'Yorum Onaylandı',
+                                'success'
+                            ).then((button) => {
+                                if (button.value) {
+                                    location.reload();
+                                    $(".btn-success").attr('disabled', 'disabled')
+                                }
+                            })
+                        }
+                    }
+                });
+            } else if (
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'İptal Edildi',
+                    'Yorum Onaylama İşleminiz İptal Edildi',
+                    'error'
+                )
+            }
+        });
+    });
+
+</script>

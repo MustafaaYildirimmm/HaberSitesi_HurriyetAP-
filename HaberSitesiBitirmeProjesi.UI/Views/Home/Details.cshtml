@@ -79,24 +79,28 @@
                             CommentRep cr = new CommentRep();
                             if (cr.List().ProccessResult != null)
                             {
-                                foreach (var item in cr.List().ProccessResult)
+                                foreach (var item in cr.List().ProccessResult.Where(t => t.IsCheck == true))
                                 {
-                                    <li class="single_comment_area">
-                                        <div class="comment-wrapper d-md-flex align-items-start">
-                                            <!-- Comment Meta -->
-                                            <div class="comment-author">
+                                    if (Model.Id == item.ArticleId)
+                                    {
+                                        <li class="single_comment_area">
+                                            <div class="comment-wrapper d-md-flex align-items-start">
+                                                <!-- Comment Meta -->
+                                                <div class="comment-author">
 
+                                                </div>
+                                                <!-- Comment Content -->
+                                                <div class="comment-content">
+                                                    <h5>@item.Member.Name @item.Member.Surname</h5>
+                                                    <span class="comment-date font-pt">@item.Date.Day-@item.Date.Month,@item.Date.Year</span>
+                                                    <p>@item.Message</p>
+
+                                                </div>
                                             </div>
-                                            <!-- Comment Content -->
-                                            <div class="comment-content">
-                                                <h5>@item.Member.Name @item.Member.Surname</h5>
-                                                <span class="comment-date font-pt">@item.Date.Day-@item.Date.Month,@item.Date.Year</span>
-                                                <p>@item.Message</p>
 
-                                            </div>
-                                        </div>
+                                        </li>
+                                    }
 
-                                    </li>
                                 }
                             }
 
@@ -111,8 +115,8 @@
                             <h4 class="font-bold">leave a comment</h4>
                         </div>
                         <!-- Comment Form -->
-                        
-                        @using (Ajax.BeginForm("CommentAdd", "Home", new AjaxOptions { HttpMethod = "POST", OnSuccess = "OnSuccess",OnFailure="OnFailure" }))
+
+                        @using (Ajax.BeginForm("CommentAdd", "Home", new AjaxOptions { HttpMethod = "POST", OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
                         {
                             @Html.HiddenFor(m => m.Id)
                             <div class="form-group">
@@ -163,7 +167,7 @@
                 }
             });
         }
-        
+
     }
 
     function OnFailure(response) {

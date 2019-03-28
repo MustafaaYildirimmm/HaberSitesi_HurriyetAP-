@@ -15,12 +15,14 @@ namespace HaberSitesiBitirmeProjesi.DataAccess
 
         public override Result<int> Delete(int id)
         {
-            throw new NotImplementedException();
+            Comment c = db.Comments.Find(id);
+            db.Comments.Remove(c);
+            return result.GetResult(db);
         }
 
         public override Result<Comment> GetT(int id)
         {
-            throw new NotImplementedException();
+            return result.GetT(db.Comments.Find(id));
         }
 
         public override Result<int> Insert(Comment item)
@@ -33,12 +35,14 @@ namespace HaberSitesiBitirmeProjesi.DataAccess
 
         public override Result<List<Comment>> List()
         {
-            return result.GetListResult(db.Comments.Where(m => m.IsCheck == true).ToList());
+            return result.GetListResult(db.Comments.ToList());
         }
 
         public override Result<int> Update(Comment item)
         {
-            throw new NotImplementedException();
+            Comment c = db.Comments.Find(item.Id);
+            c.IsCheck = true;
+            return result.GetResult(db);
         }
     }
 }

@@ -39,7 +39,7 @@ namespace HaberSitesiBitirmeProjesi.UI.Controllers
             return View(ar.List().ProccessResult.Where(t=>t.CategoryId==id).ToPagedList<Articles>(_sayfaNo,10));
         }
      
-        [HttpPost,ChildActionOnly]
+        [HttpPost]
         public JsonResult CommentAdd(int id,string message)
         {
             Member m = (Member)Session["User"];
