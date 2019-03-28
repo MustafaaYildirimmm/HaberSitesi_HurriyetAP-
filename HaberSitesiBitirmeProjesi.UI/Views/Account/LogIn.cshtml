@@ -7,7 +7,7 @@
 }
 @using (Html.BeginForm())
 {
-    @Html.ValidationSummary()
+    @Html.AntiForgeryToken()
 <section class="gazette-contact-area section_padding_100">
     <div class="container">
         <div class="row">
@@ -18,7 +18,7 @@
                 <!-- Contact Form -->
                 <form action="#" method="post">
                     <div class="form-group">
-                        @Html.TextBoxFor(m => m.Email, new { @id = "contact-name", @class = "form-control", @placeholder = "Enter Your Email" })
+                        @Html.TextBoxFor(m => m.Email, new { @id = "contact-name", @class = "form-control", @placeholder = "Enter Your Email"})
                         @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
@@ -26,7 +26,7 @@
                         @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                     </div>
 
-                    <button type="submit" class="btn contact-btn">SUBMIT <i class="fa fa-angle-right ml-2"></i></button>
+                    <button type="submit" class="btn contact-btn col-md-4 ">SUBMIT <i class="fa fa-angle-right ml-2"></i></button>
                 </form>
             </div>
 

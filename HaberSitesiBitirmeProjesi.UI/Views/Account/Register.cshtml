@@ -1,0 +1,46 @@
+﻿@using HaberSitesiBitirmeProjesi.Entity
+@model Member
+
+@{
+    ViewBag.Title = "LogIn";
+    Layout = "~/Views/Shared/_UILAyout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @*@Html.ValidationSummary(false)*@
+    <section class="gazette-contact-area section_padding_100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-8">
+                    <div class="gazette-heading">
+                        <h4 class="font-bold">Giris Yap</h4>
+                    </div>
+                    <!-- Contact Form -->
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.Name, new { @id = "contact-name", @class = "form-control", @placeholder = "Enter Your Email" })
+                        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.Surname, new { @id = "contact-name", @class = "form-control", @placeholder = "Enter Your Email" })
+                        @Html.ValidationMessageFor(m => m.Surname, "", new { @class = "text-danger" })
+                    </div>
+                    
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.Email, new { @id = "contact-name", @class = "form-control", @placeholder = "Enter Your Email" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.PasswordFor(m => m.Password, new { @id = "contact-name", @class = "form-control", @placeholder = "Enter Your Password" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+
+                    <button type="submit" class="btn contact-btn col-md-4 ">SUBMIT <i class="fa fa-angle-right ml-2"></i></button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+}
+
+

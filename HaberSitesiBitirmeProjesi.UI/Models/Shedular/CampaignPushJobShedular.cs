@@ -17,9 +17,10 @@ namespace HaberSitesiBitirmeProjesi.UI.Models.Shedular
             IJobDetail job = JobBuilder.Create<CampaignPushJob>().Build();
             ITrigger trigger = TriggerBuilder.Create()
                 .WithDailyTimeIntervalSchedule(
-                s => s.OnEveryDay()
-                    .StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(17, 46))
-                    ).Build();
+                    s => s.WithIntervalInHours(24)
+                        .OnEveryDay()
+                        .StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(21, 21))
+                                        ).Build();
 
             schedular.ScheduleJob(job, trigger);
         }

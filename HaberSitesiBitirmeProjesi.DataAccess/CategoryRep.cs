@@ -22,7 +22,7 @@ namespace HaberSitesiBitirmeProjesi.DataAccess
 
         public override Result<Category> GetT(int id)
         {
-            return result.GetObjByID(db.Categories.SingleOrDefault(t => t.ID == id));
+            return result.GetT(db.Categories.SingleOrDefault(t => t.ID == id));
         }
 
         public override Result<int> Insert(Category item)

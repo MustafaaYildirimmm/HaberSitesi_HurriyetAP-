@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="ArticleRep.cs" />
     <Compile Include="CategoryRep.cs" />
+    <Compile Include="CommentRep.cs" />
     <Compile Include="DataRepository.cs" />
     <Compile Include="MemberRep.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

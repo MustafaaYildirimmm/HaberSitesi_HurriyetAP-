@@ -46,7 +46,7 @@ namespace HaberSitesiBitirmeProjesi.Bussiness
             return result;
         }
 
-        public Result<T> GetObjByID(T data)
+        public Result<T> GetT(T data)
         {
             Result<T> result = new Result<T>();
             if (data!=null)

@@ -7,6 +7,7 @@ using HaberSitesiBitirmeProjesi.Entity;
 using HaberSitesiBitirmeProjesi.Bussiness;
 using HaberSitesiBitirmeProjesi.DataAccess;
 using System.Diagnostics;
+using PagedList;
 
 namespace HaberSitesiBitirmeProjesi.UI.Controllers
 {
@@ -15,6 +16,8 @@ namespace HaberSitesiBitirmeProjesi.UI.Controllers
 
         Result<int> result = new Result<int>();
         ArticleRep ar = new ArticleRep();
+        CategoryRep catRep = new CategoryRep();
+        CommentRep cr = new CommentRep();
         List<Articles> art = new List<Articles>();
         // GET: Home
         public ActionResult Index()
@@ -30,34 +33,27 @@ namespace HaberSitesiBitirmeProjesi.UI.Controllers
             return View(a);
         }
 
-        public ActionResult Dunya(int id)
+        public ActionResult GetByCat(int id,int? SayfaNo)
         {
-            art = ar.List().ProccessResult.Where(t => t.CategoryId == id).ToList();
-            return View(art);
+            int _sayfaNo = SayfaNo ?? 1;
+            return View(ar.List().ProccessResult.Where(t=>t.CategoryId==id).ToPagedList<Articles>(_sayfaNo,10));
         }
-
-        public ActionResult Spor(int id)
+     
+        [HttpPost,ChildActionOnly]
+        public JsonResult CommentAdd(int id,string message)
         {
-            art = ar.List().ProccessResult.Where(t => t.CategoryId == id).ToList();
-            return View(art);
-        }
-
-        public ActionResult Gundem(int id)
-        {
-            art = ar.List().ProccessResult.Where(t => t.CategoryId == id).ToList();
-            return View(art);
-        }
-
-        public ActionResult Ekonomi(int id)
-        {
-            art = ar.List().ProccessResult.Where(t => t.CategoryId == id).ToList();
-            return View(art);
-        }
-
-        public ActionResult Kelebek(int id)
-        {
-            art = ar.List().ProccessResult.Where(t => t.CategoryId == id).ToList();
-            return View(art);
+            Member m = (Member)Session["User"];
+            Comment c = new Comment();
+            if (m!=null)
+            {
+                c.Date = DateTime.Now.ToLocalTime();       
+                c.MemberId = m.Id;
+                c.ArticleId = id;
+                c.IsCheck = false;
+                c.Message = message;
+            }
+            result = cr.Insert(c);
+            return Json(result.UserMessage);
         }
     }
 }

@@ -10,6 +10,10 @@ namespace HaberSitesiBitirmeProjesi.Entity
 {
     public class Member
     {
+        public Member()
+        {
+            this.Comments = new HashSet<Comment>();
+        }
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
@@ -23,6 +27,8 @@ namespace HaberSitesiBitirmeProjesi.Entity
             DisplayName("Password")]
         public string Password { get; set; }
         public Nullable<int> RoleId { get; set; }
+        public string Photo { get; set; }
         public virtual Role UserRole { get; set; }
+        public ICollection<Comment> Comments { get; set; }
     }
 }

@@ -1,0 +1,13 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@using HaberSitesiBitirmeProjesi.Entity
+@model IPagedList<Articles>
+@{
+    ViewBag.Title = "Dunya";
+    Layout = "~/Views/Shared/_UILAyout.cshtml";
+}
+
+@Html.Partial("~/Views/Shared/_NewsPartial.cshtml")
+
+@Html.PagedListPager(Model, _sayfaNo => Url.Action("GetByCat", "Home", new { SayfaNo = _sayfaNo }))
+

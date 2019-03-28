@@ -1,12 +1,14 @@
-﻿@using HaberSitesiBitirmeProjesi.Entity.API
-@model IEnumerable<ArticleApi>
+﻿@using PagedList
+@using PagedList.Mvc
+@using HaberSitesiBitirmeProjesi.Entity.API
+@model IPagedList<ArticleApi>
+
 @{
     ViewBag.Title = "List";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
 <h2 class="text-center">List News</h2>
-
 
 <table class="table table-hover">
     <thead>
@@ -22,20 +24,80 @@
         @foreach (var item in Model)
         {
 
-            <tr>
+            <tr id="@item.Id">
                 <td>@item.Id</td>
                 <td>@item.StartDate</td>
                 <td>@item.Title</td>
                 <td>@item.Path</td>
-                <td>
+                <td id="@item.Id">
                     <a href="~/Admin/Article/Details/@item.Id" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
-                    <a href="~/Article/AddArt/@item.Id" class="btn btn-danger"><i class="glyphicon glyphicon-plus"></i></a>
-                    
+                    <a href="#" class="btn btn-danger" id="@(item.Id) "><i class="glyphicon glyphicon-plus"></i></a>
+
                 </td>
+
             </tr>
         }
     </tbody>
 </table>
 
+@Html.PagedListPager(Model, _sayfaNo => Url.Action("List", "Article", new { SayfaNo = _sayfaNo }))
+
+
+
+<script src="~/Content/iCheck/icheck.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+<link href="~/Content/iCheck/flat/blue.css" rel="stylesheet" />
+<style>
+    .td-color {
+        background-color: seagreen;
+    }
+</style>
+<script type="text/javascript">
+
+    $("td .btn-danger").click(function () {
+        var _this = this;
+        $.ajax({
+            url: '/Article/Add?Id=' + _this.id,
+            method: 'POST',
+            dataType: 'Json',
+            success: function (data) {
+                if (data == 'Başarili') {
+                    Swal.fire({
+                        type: 'success',
+                        title: 'HABER BAŞARI İLE EKLENDİ :)',
+                        animation: false,
+                        customClass: {
+                            popup: 'animated tada'
+                        }
+                    });
+                }
+                else {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Kayıtlı Haber Mevcuttur.',
+                        animation: false,
+                        customClass: {
+                            popup: 'animated tada'
+                        }
+                    });
+                }
+
+                $("#" + _this.id + " .btn-danger").attr('disabled', 'disabled');
+                $("#" + _this.id).addClass("td-color");
+            },
+            error: function () {
+                Swal.fire({
+                    type: 'error',
+                    title: 'bir hata oluştu..',
+                    animation: false,
+                    customClass: {
+                        popup: 'animated tada'
+                    }
+                });
+            }
+        })
+    });
+</script>
 
 

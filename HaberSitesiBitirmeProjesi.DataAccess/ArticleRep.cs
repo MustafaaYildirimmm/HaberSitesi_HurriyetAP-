@@ -31,7 +31,9 @@ namespace HaberSitesiBitirmeProjesi.DataAccess
 
         public override Result<int> Insert(Articles item)
         {
-            db.Articles.Add(item);
+            bool check = db.Articles.Any(t => t.ArticleId == item.ArticleId);
+            if(check==false&&item.CategoryId!=null)
+                db.Articles.Add(item);
             return result.GetResult(db);
         }
 
@@ -47,7 +49,7 @@ namespace HaberSitesiBitirmeProjesi.DataAccess
 
         public override Result<Articles> GetT(int id)
         {
-            return result.GetObjByID(db.Articles.SingleOrDefault(t => t.Id == id));
+            return result.GetT(db.Articles.SingleOrDefault(t => t.Id == id));
         }
 
         public Result<List<ArticleApi>> ListApi()
@@ -66,17 +68,24 @@ namespace HaberSitesiBitirmeProjesi.DataAccess
             a.NewsDate = item.ModifiedDate;
             a.ArticleId = item.Id;
             a.Text = item.Text;
-            foreach (var photo in item.Files)
+            if (item.Files!=null)
             {
-                a.Photo = photo.FileUrl;
-                break;
+                foreach (var photo in item.Files)
+                {
+                    a.Photo = photo.FileUrl;
+                    break;
+                }
             }
-            foreach (var cat in cr.List().ProccessResult)
+            if (item.Path!=null)
             {
-                if (item.Path.ToLower().Contains(cat.CategoryName.Replace("ü", "u").ToLower()))
-                    a.CategoryId = cat.ID;
+                foreach (var cat in cr.List().ProccessResult)
+                {
+                    if (item.Path.ToLower().Contains(cat.CategoryName.Replace("ü", "u").ToLower()))
+                        a.CategoryId = cat.ID;
+                }
             }
-            return result.GetObjByID(a);
+            
+            return result.GetT(a);
         }
 
         public Result<List<Articles>> GetByIdLatestNews(int Quantity)

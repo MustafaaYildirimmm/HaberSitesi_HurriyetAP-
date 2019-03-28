@@ -21,12 +21,12 @@ namespace HaberSitesiBitirmeProjesi.DataAccess
 
         public override Result<Member> GetT(int id)
         {
-            return result.GetObjByID(db.Member.Find(id));
+            return result.GetT(db.Member.Find(id));
         }
 
         public override Result<int> Insert(Member item)
         {
-            item.RoleId = 1;
+            item.RoleId = 2;
             db.Member.Add(item);
             return result.GetResult(db);
         }
@@ -44,6 +44,12 @@ namespace HaberSitesiBitirmeProjesi.DataAccess
             m.Email = item.Email;
             m.Password = item.Password;
             return result.GetResult(db);
+        }
+
+        public Result<Member> CheckLogIn(Member model)
+        {
+            Member m = db.Member.Where(t => t.Email == model.Email && t.Password == model.Password).FirstOrDefault();
+            return result.GetT(m);
         }
     }
 }

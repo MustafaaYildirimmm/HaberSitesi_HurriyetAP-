@@ -1,4 +1,5 @@
 ﻿@using HaberSitesiBitirmeProjesi.DataAccess
+@using HaberSitesiBitirmeProjesi.Entity
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,14 +37,16 @@
                         <div class="breaking-news-area">
                             <h5 class="breaking-news-title">Breaking news</h5>
                             <div id="breakingNewsTicker" class="ticker">
-                                <ul>
-                                    <li><a href="#">Brexit breakthrough in Brussels comes after week of drama</a></li>
-                                    <li><a href="#">Brexit breakthrough in Brussels</a></li>
-                                    <li><a href="#">Brexit breakthrough in Brussels comes after week of drama</a></li>
-                                    <li><a href="#">Brex comes after week of drama</a></li>
-                                    <li><a href="#">Brexit breakthrough in Bweek of drama</a></li>
-                                    <li><a href="#">Brexit bssels comes after week of drama</a></li>
-                                </ul>
+                                @{
+                                    ArticleRep ar = new ArticleRep();
+                                    <ul>
+
+                                        @foreach (var item in ar.GetByIdLatestNews(8).ProccessResult)
+                                        {
+                                            <li><a href="~/Home/Details/@item.Id">@item.Title</a></li>
+                                        }
+                                    </ul>
+                                }
                             </div>
                         </div>
                     </div>
@@ -159,15 +162,20 @@
                     <!-- Header Advert Area -->
                     <div class="col-12 col-md-8">
                         @{
+                            Member m = (Member)Session["User"];
                             if (User.Identity.IsAuthenticated)
                             {
                                 <div class="post-continue-btn pull-right">
-                                    <a href="##" class="font-pt">LogOut </a>
+                                    <a href="~/Account/LogOut" class="font-pt">LogOut </a>
                                 </div>
 
                                 <div class="post-continue-btn pull-right" style="margin-right:10px">
-                                    <p>asdsadads</p>
-                                    @DateTime.Now
+                                    @if (m != null)
+                                    {
+                                        <p>@m.Name.ToUpper() @m.Surname.ToUpper()</p>
+
+                                    }
+
                                 </div>
                             }
                             else
@@ -177,7 +185,7 @@
                                     <a href="~/Account/LogIn" class="font-pt">LogIn </a>
                                 </div>
                                 <div class="post-continue-btn pull-right" style="margin-right:10px">
-                                    <a href="##" class="font-pt">Register </a>
+                                    <a href="~/Account/Register" class="font-pt">Register </a>
                                 </div>
 
                             }
@@ -206,13 +214,13 @@
                                                 if (i == 0)
                                                 {
                                                     <li class="nav-item active">
-                                                        <a class="nav-link" href="~/Home/@item.CategoryName.Replace("ü","u")/@item.ID">@item.CategoryName <span class="sr-only">(current)</span></a>
+                                                        <a class="nav-link" href="~/Home/GetByCAt/@item.ID">@item.CategoryName <span class="sr-only">(current)</span></a>
                                                     </li>
                                                 }
                                                 else
                                                 {
                                                     <li class="nav-item">
-                                                        <a class="nav-link" href="~/Home/@item.CategoryName.Replace("ü","u")/@item.ID">@item.CategoryName</a>
+                                                        <a class="nav-link" href="~/Home/GetByCat/@item.ID">@item.CategoryName</a>
                                                     </li>
                                                 }
 
@@ -366,7 +374,7 @@
                             <p>
                                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                                 Copyright &copy;
-                                <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by Mustafa YILDIRIM
                                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                             </p>
                         </div>

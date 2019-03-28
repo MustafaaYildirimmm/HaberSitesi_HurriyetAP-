@@ -15,7 +15,7 @@ namespace HaberSitesiBitirmeProjesi.UI
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            //CampaignPushJobShedular.Start();
+            CampaignPushJobShedular.Start();
         }
     }
 }

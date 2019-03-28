@@ -1,9 +1,13 @@
-﻿@using HaberSitesiBitirmeProjesi.Entity
-@model IEnumerable<Articles>
+﻿@using PagedList
+@using PagedList.Mvc
+@using HaberSitesiBitirmeProjesi.Entity
+@model IPagedList<Articles>
 @{
     ViewBag.Title = "News";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+
+
 
 <h2 class="text-center">Front- Side News</h2>
 <table class="table table-hover ">
@@ -21,16 +25,81 @@
         @foreach (var item in Model)
         {
             <tr>
-                <th>@item.ArticleId</th>
-                <th>@item.NewsDate</th>
-                <th class="col-md-4">@item.Title</th>
-                <th>@item.Category.CategoryName</th>
-                <th><img src="@item.Photo" alt="Alternate Text" width="100" height="100" /></th>
-                <th>
-                    <a href="~/Admin/Article/Details/@item.Id" class="btn btn-primary"><i class="glyphicon-edit"></i></a>
-                    <a href="~/Article/Delete/@item.Id" class="btn btn-danger"><i class="glyphicon glyphicon-expand"></i></a>
-                </th>
+                <td>@item.ArticleId </td>
+                <td>@item.NewsDate</td>
+                <td class="col-md-4">@item.Title</td>
+                <td>@item.Category.CategoryName</td>
+                <td><img src="@item.Photo" alt="Alternate Text" width="100" height="100" /></td>
+                <td>
+                    <a href="~/Admin/Article/Details/" class="btn btn-primary"><i class="glyphicon-edit"></i></a>
+                    <a href="##" id="@item.Id" class="btn btn-danger"><i class="glyphicon glyphicon-expand"></i></a>
+                </td>
             </tr>
         }
+
+
     </tbody>
 </table>
+@Html.PagedListPager(Model, _sayfaNo => Url.Action("News", "Article", new { SayfaNo = _sayfaNo }))
+<link href="~/Content/Style.css" rel="stylesheet" />
+
+<script src="http://code.angularjs.org/1.1.5/angular.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<script type="text/javascript">
+
+    $("td .btn-danger").click(function () {
+        var _this = this;
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false,
+        });
+
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+
+                $.ajax({
+                    url: '/Article/Delete?Id=' + _this.id,
+                    method: 'POST',
+                    dataType: 'Json',
+                    success: function (data) {
+                        if (data == "Başarili") {
+                            swalWithBootstrapButtons.fire(
+                                'Silindi',
+                                'Haberiniz Silindi',
+                                'success'
+                            ).then((button) => {
+                                if (button.value)
+                                    location.reload();
+                            })
+                        }
+
+                    }
+
+                })
+
+            } else if (
+                // Read more about handling dismissals
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'Your imaginary file is safe :)',
+                    'error'
+                )
+            }
+        });
+    });
+
+
+</script>

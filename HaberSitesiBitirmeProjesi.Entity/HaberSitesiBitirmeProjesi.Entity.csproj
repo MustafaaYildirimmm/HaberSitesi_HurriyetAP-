@@ -62,10 +62,11 @@
     <Compile Include="API\FilesApi.cs" />
     <Compile Include="Articles.cs" />
     <Compile Include="Category.cs" />
+    <Compile Include="Comment.cs" />
     <Compile Include="Member.cs" />
-    <Compile Include="Migrations\201903201455061_mistik.cs" />
-    <Compile Include="Migrations\201903201455061_mistik.Designer.cs">
-      <DependentUpon>201903201455061_mistik.cs</DependentUpon>
+    <Compile Include="Migrations\201903271957531_init2.cs" />
+    <Compile Include="Migrations\201903271957531_init2.Designer.cs">
+      <DependentUpon>201903271957531_init2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="NewsPaperContext.cs" />
@@ -80,8 +81,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201903201455061_mistik.resx">
-      <DependentUpon>201903201455061_mistik.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201903271957531_init2.resx">
+      <DependentUpon>201903271957531_init2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
